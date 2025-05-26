@@ -9,6 +9,16 @@ exports.createTask = async (req, res) => {
     }
 };
 
+exports.getTaskById = async (req, res) => {
+  try {
+    const task = await taskServices.getTaskById(req.params.id);
+    if (!task) return res.status(404).json({ message: "Task not found" });
+    res.status(200).json(task);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 exports.updateTask = async (req, res) => {
     try {
         const task = await taskServices.updateTask(req.params.taskId, req.body);
