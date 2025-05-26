@@ -2,22 +2,26 @@ const Board = require("../models/Board");
 const Task = require("../models/Task");
 
 exports.createBoard = async (name = "Untitled Board", description = "") => {
-  const board = new Board({ name, description });
+  // Step 1: Create a new board
+  const board = new Board(boardData);
   await board.save();
 
+  // Step 2: Define default tasks
   const defaultTasks = [
-    { title: "Task In Progress", status: "In Progress", board: board._id },
-    { title: "Task Completed", status: "Completed", board: board._id },
-    { title: "Task Won't Do", status: "Won't Do", board: board._id },
-    { title: "New Task", status: "In Progress", board: board._id },
+    { name: "Task in Progress", status: "In Progress", boardId: board._id },
+    { name: "Task Completed", status: "Completed", boardId: board._id },
+    { name: "Task Won't Do", status: "Won't Do", boardId: board._id },
+    { name: "Default Task", status: "In Progress", boardId: board._id },
   ];
 
-  const tasks = await Task.insertMany(defaultTasks);
+  // Step 3: Insert default tasks
+  const createdTasks = await Task.insertMany(defaultTasks);
 
-  board.tasks = tasks.map((t) => t._id);
+  // Step 4: Push the task IDs into the board
+  board.tasks.push(...createdTasks.map((task) => task._id));
   await board.save();
 
-  return board;
+  return await board.populate("tasks");
 };
 
 exports.getBoardById = async (id) => {
