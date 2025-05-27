@@ -1,7 +1,6 @@
 "use server";
 import BoardHeader from "@/components/board-header";
 import TaskCard from "@/components/task-card";
-// Example: src/app/board/[boardId]/page.tsx
 import { apiFetch } from "@/lib/api";
 import { boardsAPI } from "@/lib/apiRoutes";
 import { Board } from "@/types/types";
