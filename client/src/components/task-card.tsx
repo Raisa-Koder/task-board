@@ -2,6 +2,7 @@ import React, { JSX } from "react";
 import { Task } from "../types/types";
 import { CheckCircle, XCircle, MinusCircle } from "lucide-react";
 import { RxLapTimer } from "react-icons/rx";
+import { ICONS } from "@/constants/constants";
 
 const statusColors: Record<string, string> = {
   "In Progress": "bg-[#F8D57E]",
@@ -31,27 +32,43 @@ interface TaskCardProps {
 }
 
 const TaskCard = ({ task }: TaskCardProps) => {
-  const status = statusIconStyles[task.status] || null;
+  const status = task.status ? statusIconStyles[task.status] : null;
+  const icon = task?.icon ? ICONS[task?.icon] : null;
   return (
-    <div
-      className={`flex items-center justify-between p-4 rounded-xl ${
-        statusColors[task.status] || statusColors.default
-      }`}
-    >
-      <div className="flex items-center gap-4">
-        <span className="text-3xl">{task.icon || "📌"}</span>
-        <div>
-          <h3 className="font-semibold text-lg">{task.name}</h3>
-          {task.description && (
-            <p className="text-sm text-gray-700">{task.description}</p>
+    <div className={`p-4 ${statusColors[task.status || "default"]} rounded-xl`}>
+      <div className="flex justify-between items-center">
+        {/* Icon + Text block */}
+        <div
+          className={`flex ${
+            task.description ? "items-start" : "items-center"
+          }  gap-4 flex-1`}
+        >
+          {/* Icon */}
+          {icon && (
+            <div className="p-2 rounded-xl bg-white flex-shrink-0">
+              {icon.emoji || <icon.icon className="h-6 w-6 text-gray-800" />}
+            </div>
           )}
-        </div>
-      </div>
 
-      <div
-        className={`p-3 rounded-xl flex items-center justify-center ${status.bg}`}
-      >
-        {status.icon}
+          {/* Title + optional description */}
+          <div>
+            <h3 className="font-semibold text-lg text-gray-900">{task.name}</h3>
+            {task.description && (
+              <p className="text-sm text-gray-700 leading-snug break-words mt-1">
+                {task.description}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Status icon (right side) */}
+        {status && (
+          <div
+            className={`p-3 rounded-xl flex items-center justify-center ${status.bg} flex-shrink-0`}
+          >
+            {status.icon}
+          </div>
+        )}
       </div>
     </div>
   );

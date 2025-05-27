@@ -1,6 +1,10 @@
+"use server"
+import { revalidatePath } from "next/cache";
+
 export async function apiFetch<T = any>(
   url: string,
-  options: RequestInit
+  options: RequestInit,
+  revalidationPath?: string
 ): Promise<T> {
   try {
     const res = await fetch(url, {
@@ -22,6 +26,8 @@ export async function apiFetch<T = any>(
     if (contentType?.includes('application/json')) {
       return res.json() as Promise<T>;
     }
+
+    revalidationPath && revalidatePath(revalidationPath)
 
     // fallback for non-JSON responses
     return res.text() as unknown as T;

@@ -1,9 +1,9 @@
 "use server";
-import BoardHeader from "@/components/board-header";
-import TaskCard from "@/components/task-card";
+
 import { apiFetch } from "@/lib/api";
 import { boardsAPI } from "@/lib/apiRoutes";
 import { Board } from "@/types/types";
+import ManageBoard from "./manage-board";
 
 export default async function BoardPage({
   params,
@@ -14,13 +14,5 @@ export default async function BoardPage({
     method: "GET",
   });
 
-  return (
-    <main className="max-w-xl mx-auto py-8 px-4 space-y-6">
-      <BoardHeader name={board.name} description={board.description} />
-
-      {board.tasks.map((task) => (
-        <TaskCard key={task._id} task={task} />
-      ))}
-    </main>
-  );
+  return <ManageBoard board={board} />;
 }
