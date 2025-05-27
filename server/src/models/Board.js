@@ -1,6 +1,6 @@
-const mangoose = require("mongoose");
+const mongoose = require("mongoose");
 
-const boardSchema = new mangoose.Schema(
+const boardSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     description: { type: String },
@@ -9,4 +9,4 @@ const boardSchema = new mangoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mangoose.model("Board", boardSchema);
+module.exports = mongoose.model("Board", boardSchema);
