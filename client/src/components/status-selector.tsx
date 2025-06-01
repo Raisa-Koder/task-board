@@ -25,7 +25,7 @@ const StatusSelector = ({ value, onChange }: StatusSelectorProps) => {
           )}
         >
           <div
-            className={`p-3 rounded-xl flex items-center justify-center ${s.color}`}
+            className={`p-3 rounded-xl flex items-center justify-center ${s.color} text-white`}
           >
             {s.value === "Completed" ? (
               <CheckCircle className="w-4 h-4" />

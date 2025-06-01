@@ -8,9 +8,10 @@ import ManageBoard from "./manage-board";
 export default async function BoardPage({
   params,
 }: {
-  params: { boardId: string };
+  params: Promise<{ boardId: string }>;
 }) {
-  const board: Board = await apiFetch(`${boardsAPI}/${params.boardId}`, {
+  const { boardId } = await params;
+  const board: Board = await apiFetch(`${boardsAPI}/${boardId}`, {
     method: "GET",
   });
 
