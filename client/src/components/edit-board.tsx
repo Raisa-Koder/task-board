@@ -31,7 +31,7 @@ const EditBoard = ({
     }
     const editBoard = async () => {
       try {
-        const updateBoard = await apiFetch<Board>(`${boardsAPI}/${boardId}`, {
+        await apiFetch<Board>(`${boardsAPI}/${boardId}`, {
           method: "PUT",
           body: JSON.stringify({
             name: name.trim(),

@@ -10,7 +10,7 @@ interface IconSelectorProps {
 const IconSelector = ({ value, onChange }: IconSelectorProps) => {
   return (
     <div className="flex gap-3 flex-wrap">
-      {Object.entries(ICONS).map(([key, { emoji, icon: Icon }]) => (
+      {Object.entries(ICONS).map(([key, { icon: Icon }]) => (
         <button
           key={key}
           type="button"

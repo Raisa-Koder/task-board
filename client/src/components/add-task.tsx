@@ -1,35 +1,10 @@
-import React, { JSX } from "react";
+import React from "react";
 import { Task } from "../types/types";
-import { CheckCircle, XCircle, PlusIcon } from "lucide-react";
-import { RxLapTimer } from "react-icons/rx";
-import { ICONS } from "@/constants/constants";
+import { PlusIcon } from "lucide-react";
 import { apiFetch } from "@/lib/api";
 import { taskAPI } from "@/lib/apiRoutes";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-
-const statusColors: Record<string, string> = {
-  "In Progress": "bg-[#F8D57E]",
-  Completed: "bg-green-300",
-  "Won't Do": "bg-red-200",
-  default: "bg-gray-200",
-};
-
-// Background and icon color styles for the icon badge on the right
-const statusIconStyles: Record<string, { bg: string; icon: JSX.Element }> = {
-  "In Progress": {
-    bg: "bg-[#FF9B45]",
-    icon: <RxLapTimer className="text-white w-4 h-4" />,
-  },
-  Completed: {
-    bg: "bg-green-500",
-    icon: <CheckCircle className="text-white w-4 h-4" />,
-  },
-  "Won't Do": {
-    bg: "bg-red-500/75",
-    icon: <XCircle className="text-white w-4 h-4" />,
-  },
-};
 
 interface AddTaskProps {
   boardId: string;
@@ -40,9 +15,9 @@ const AddTask = ({ boardId }: AddTaskProps) => {
   const createTask = () => {
     const addTask = async () => {
       try {
-        const newTask = await apiFetch<Task>(`${taskAPI}/`, {
+        await apiFetch<Task>(`${taskAPI}/`, {
           method: "POST",
-          body: JSON.stringify({boardId}),
+          body: JSON.stringify({ boardId }),
         });
         toast.success("New task created successfully");
         refresh();
@@ -54,7 +29,10 @@ const AddTask = ({ boardId }: AddTaskProps) => {
     addTask();
   };
   return (
-    <div className={`p-4 bg-[#f5e8d5] rounded-xl cursor-pointer`} onClick={createTask}>
+    <div
+      className={`p-4 bg-[#f5e8d5] rounded-xl cursor-pointer`}
+      onClick={createTask}
+    >
       <div className="flex justify-between items-center">
         {/* Status icon (left side) */}
 
