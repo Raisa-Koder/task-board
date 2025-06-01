@@ -1,6 +1,6 @@
 import React, { JSX } from "react";
 import { Task } from "../types/types";
-import { CheckCircle, XCircle, MinusCircle } from "lucide-react";
+import { CheckCircle, XCircle } from "lucide-react";
 import { RxLapTimer } from "react-icons/rx";
 import { ICONS } from "@/constants/constants";
 

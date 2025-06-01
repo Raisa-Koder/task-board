@@ -1,10 +1,8 @@
 "use server"
-import { revalidatePath } from "next/cache";
 
-export async function apiFetch<T = any>(
+export async function apiFetch<T>(
   url: string,
-  options: RequestInit,
-  revalidationPath?: string
+  options: RequestInit
 ): Promise<T> {
   try {
     const res = await fetch(url, {
@@ -27,13 +25,11 @@ export async function apiFetch<T = any>(
       return res.json() as Promise<T>;
     }
 
-    revalidationPath && revalidatePath(revalidationPath)
-
     // fallback for non-JSON responses
     return res.text() as unknown as T;
 
-  } catch (error: any) {
-    console.error(`API fetch error on: ${url}:`, error.messgae);
+  } catch (error) {
+    console.error(`API fetch error on: ${url}:`, error);
     throw error;
   }
 }

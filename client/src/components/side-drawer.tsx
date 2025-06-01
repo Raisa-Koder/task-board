@@ -14,7 +14,7 @@ const SideDrawer = ({ isOpen, onClose, title, children }: SideDrawerProps) => {
     const onEsc = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     if (isOpen) document.addEventListener("keydown", onEsc);
     return () => document.removeEventListener("keydown", onEsc);
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 

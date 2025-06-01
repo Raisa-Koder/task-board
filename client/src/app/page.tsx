@@ -4,9 +4,10 @@
 import { redirect } from 'next/navigation';
 import { boardsAPI } from '@/lib/apiRoutes';
 import { apiFetch } from '@/lib/api';
+import { Board } from '@/types/types';
 
 export default async function Home() {
-    const data = await apiFetch(boardsAPI, {
+    const data: Board = await apiFetch(boardsAPI, {
     method: 'POST',
     body: JSON.stringify({
       name: 'My Task Board',

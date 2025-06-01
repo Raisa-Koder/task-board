@@ -7,10 +7,9 @@ import TaskForm from "./task-form";
 import { apiFetch } from "@/lib/api";
 import { taskAPI } from "@/lib/apiRoutes";
 import toast from "react-hot-toast";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const TaskList = ({ tasks }: { tasks: Task[] }) => {
-  const pathname = usePathname();
   const { refresh } = useRouter();
   const [selectedTask, setSelectedTask] = useState<Task | undefined>();
   const openDrawer = (task: Task) => setSelectedTask(task);
@@ -23,13 +22,12 @@ const TaskList = ({ tasks }: { tasks: Task[] }) => {
     }
     const editTask = async () => {
       try {
-        const updatedTask = await apiFetch<Task>(
+        await apiFetch<Task>(
           `${taskAPI}/${task._id}`,
           {
             method: "PUT",
             body: JSON.stringify(task),
-          },
-          pathname
+          }
         );
         toast.success("Task updated successfully");
         refresh();
@@ -45,7 +43,7 @@ const TaskList = ({ tasks }: { tasks: Task[] }) => {
   const onDelete = (taskId: string) => {
     const deleteTask = async () => {
       try {
-        await apiFetch(`${taskAPI}/${taskId}`, { method: "DELETE" }, pathname);
+        await apiFetch(`${taskAPI}/${taskId}`, { method: "DELETE" });
         toast.success("Task deleted successfully");
         refresh();
         closeDrawer();
