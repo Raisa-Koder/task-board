@@ -1,5 +1,6 @@
+const mongoose = require("mongoose");
 const Task = require("../models/Task");
-const task = require("../models/Task");
+const Board = require("../models/Board")
 
 exports.createTask = async (taskData) => {
     // If no name provided, assign default
@@ -10,13 +11,15 @@ exports.createTask = async (taskData) => {
     await task.save();
 
     // Update the Board to include this task
-    Board.findByIdAndUpdate(taskData.boardId, { $push: { tasks: task._id } })
-
+    const boardId = mongoose.Types.ObjectId.createFromHexString(taskData.boardId);
+    await Board.findByIdAndUpdate(boardId, {
+        $push: { tasks: task._id },
+    });
     return task;
 };
 
 exports.getTaskById = async (taskId) => {
-  return await Task.findById(taskId);
+    return await Task.findById(taskId);
 };
 
 exports.updateTask = async (taskId, updates) => {

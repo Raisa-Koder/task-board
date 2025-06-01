@@ -1,17 +1,15 @@
 const Board = require("../models/Board");
 const Task = require("../models/Task");
 
-exports.createBoard = async (name = "Untitled Board", description = "") => {
+exports.createBoard = async (boardData) => {
   // Step 1: Create a new board
   const board = new Board(boardData);
   await board.save();
-
   // Step 2: Define default tasks
   const defaultTasks = [
     { name: "Task in Progress", status: "In Progress", boardId: board._id },
     { name: "Task Completed", status: "Completed", boardId: board._id },
     { name: "Task Won't Do", status: "Won't Do", boardId: board._id },
-    { name: "Default Task", status: "In Progress", boardId: board._id },
   ];
 
   // Step 3: Insert default tasks

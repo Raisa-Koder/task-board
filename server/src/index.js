@@ -16,8 +16,8 @@ app.use(cors());
 app.use(express.json());
 
 // API Routes
-app.use('api/boards', boardRoutes);
-app.use('api/tasks', taskRoutes);
+app.use('/api/boards', boardRoutes);
+app.use('/api/tasks', taskRoutes);
 
 // 404 Handler
 app.use((req, res) => {
